@@ -1,5 +1,6 @@
-const { app, BrowserWindow, globalShortcut, Tray, Menu, nativeImage } = require('electron');
+const { app, BrowserWindow, globalShortcut, Tray, Menu, nativeImage, dialog } = require('electron');
 const path = require('path');
+const fs = require('fs');
 
 // Get the correct icon path based on platform
 function getIconPath() {
@@ -132,6 +133,20 @@ app.whenReady().then(() => {
     createWindow();
     createTray();
 
+    // Show shortcut info on first launch only
+    const firstRunFile = path.join(app.getPath('userData'), '.first-run-done');
+    if (!fs.existsSync(firstRunFile)) {
+        const shortcut = process.platform === 'darwin' ? 'Cmd+;' : 'Ctrl+;';
+        dialog.showMessageBox(mainWindow, {
+            type: 'info',
+            title: 'Welcome to ChrisGPT!',
+            message: `Quick tip: Use ${shortcut} to show/hide ChrisGPT anytime.`,
+            detail: 'ChrisGPT runs in your system tray and starts automatically when you log in.',
+            buttons: ['Got it!']
+        });
+        fs.writeFileSync(firstRunFile, 'done');
+    }
+
     // Auto-start on login
     app.setLoginItemSettings({
         openAtLogin: true,
@@ -139,8 +154,8 @@ app.whenReady().then(() => {
         args: ['--hidden']
     });
 
-    // Global hotkey: Ctrl+Space to toggle ChrisGPT
-    globalShortcut.register('CommandOrControl+Space', () => {
+    // Global hotkey: Ctrl+; to toggle ChrisGPT
+    globalShortcut.register('CommandOrControl+;', () => {
         if (mainWindow.isVisible()) {
             mainWindow.hide();
         } else {
