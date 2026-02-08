@@ -45,7 +45,14 @@ jobs:
         env:
           CSC_IDENTITY_AUTO_DISCOVERY: false
 
+      - name: Copy install script
+        run: |
+          chmod +x scripts/Install.command
+          cp scripts/Install.command dist/
+
       - uses: actions/upload-artifact@v4
         with:
           name: mac-installer
-          path: dist/*.dmg
+          path: |
+            dist/*.dmg
+            dist/Install.command
