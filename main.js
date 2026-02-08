@@ -34,7 +34,6 @@ function createWindow() {
             nodeIntegration: false,
             contextIsolation: true
         },
-        frame: false,
         resizable: true,
         show: false,
         titleBarStyle: 'hidden',
@@ -48,6 +47,27 @@ function createWindow() {
 
     mainWindow.setMenuBarVisibility(false);
     mainWindow.loadURL(CHRISGPT_URL);
+
+    // Inject CSS to make the top area draggable
+    mainWindow.webContents.on('did-finish-load', () => {
+        mainWindow.webContents.insertCSS(`
+            body::before {
+                content: '';
+                position: fixed;
+                top: 0;
+                left: 0;
+                right: 130px;
+                height: 36px;
+                -webkit-app-region: drag;
+                z-index: 99999;
+                pointer-events: auto;
+            }
+            /* Make sure buttons/inputs in that area are still clickable */
+            button, input, a, select, textarea, [role="button"] {
+                -webkit-app-region: no-drag;
+            }
+        `);
+    });
 
     mainWindow.once('ready-to-show', () => {
         if (!isHiddenLaunch) {
