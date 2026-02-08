@@ -1,0 +1,93 @@
+{
+  "name": "chrisgpt-desktop-app",
+  "version": "1.0.0",
+  "main": "main.js",
+  "description": "ChrisGPT - AI Sales Coach Desktop App",
+  "author": "ChrisGPT",
+  "license": "ISC",
+  "scripts": {
+    "start": "electron .",
+    "build:win": "electron-builder --win",
+    "build:mac": "electron-builder --mac",
+    "build:all": "electron-builder --win --mac"
+  },
+  "build": {
+    "appId": "com.chrisgpt.app",
+    "productName": "ChrisGPT",
+    "copyright": "Copyright © 2024 ChrisGPT",
+    "directories": {
+      "output": "dist"
+    },
+    "files": [
+      "**/*",
+      "!dist/**",
+      "!.git/**"
+    ],
+    "win": {
+      "target": [
+        {
+          "target": "nsis",
+          "arch": [
+            "x64"
+          ]
+        }
+      ],
+      "icon": "icons/icon.ico"
+    },
+    "mac": {
+      "target": [
+        {
+          "target": "dmg",
+          "arch": [
+            "x64",
+            "arm64"
+          ]
+        }
+      ],
+      "icon": "icons/icon.icns",
+      "category": "public.app-category.productivity",
+      "hardenedRuntime": true,
+      "gatekeeperAssess": false
+    },
+    "nsis": {
+      "oneClick": false,
+      "perMachine": false,
+      "allowToChangeInstallationDirectory": true,
+      "installerIcon": "icons/icon.ico",
+      "uninstallerIcon": "icons/icon.ico",
+      "installerHeaderIcon": "icons/icon.ico",
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "shortcutName": "ChrisGPT",
+      "runAfterFinish": true,
+      "installerSidebar": null,
+      "license": null,
+      "menuCategory": false,
+      "include": "installer.nsh"
+    },
+    "dmg": {
+      "contents": [
+        {
+          "x": 130,
+          "y": 220
+        },
+        {
+          "x": 410,
+          "y": 220,
+          "type": "link",
+          "path": "/Applications"
+        }
+      ],
+      "window": {
+        "width": 540,
+        "height": 400
+      }
+    }
+  },
+  "devDependencies": {
+    "cross-env": "^10.1.0",
+    "electron": "^33.3.1",
+    "electron-builder": "^26.7.0",
+    "electron-icon-builder": "^2.0.1"
+  }
+}
