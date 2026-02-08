@@ -14,56 +14,28 @@
   "build": {
     "appId": "com.chrisgpt.app",
     "productName": "ChrisGPT",
-    "copyright": "Copyright © 2024 ChrisGPT",
     "directories": {
       "output": "dist"
     },
     "files": [
-      "**/*",
-      "!dist/**",
-      "!.git/**"
+      "main.js",
+      "icons/**/*"
     ],
     "win": {
-      "target": [
-        {
-          "target": "nsis",
-          "arch": [
-            "x64"
-          ]
-        }
-      ],
+      "target": "nsis",
       "icon": "icons/icon.ico"
     },
     "mac": {
-      "target": [
-        {
-          "target": "dmg",
-          "arch": [
-            "x64",
-            "arm64"
-          ]
-        }
-      ],
+      "target": "dmg",
       "icon": "icons/icon.icns",
-      "category": "public.app-category.productivity",
-      "hardenedRuntime": true,
-      "gatekeeperAssess": false
+      "category": "public.app-category.productivity"
     },
     "nsis": {
       "oneClick": false,
-      "perMachine": false,
       "allowToChangeInstallationDirectory": true,
-      "installerIcon": "icons/icon.ico",
-      "uninstallerIcon": "icons/icon.ico",
-      "installerHeaderIcon": "icons/icon.ico",
       "createDesktopShortcut": true,
       "createStartMenuShortcut": true,
-      "shortcutName": "ChrisGPT",
-      "runAfterFinish": true,
-      "installerSidebar": null,
-      "license": null,
-      "menuCategory": false,
-      "include": "installer.nsh"
+      "shortcutName": "ChrisGPT"
     },
     "dmg": {
       "contents": [
@@ -77,17 +49,11 @@
           "type": "link",
           "path": "/Applications"
         }
-      ],
-      "window": {
-        "width": 540,
-        "height": 400
-      }
+      ]
     }
   },
   "devDependencies": {
-    "cross-env": "^10.1.0",
     "electron": "^33.3.1",
-    "electron-builder": "^26.7.0",
-    "electron-icon-builder": "^2.0.1"
+    "electron-builder": "^26.7.0"
   }
 }
